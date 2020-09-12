@@ -11,6 +11,34 @@ create an AST interpreter like the one below
 ソースコード -字句解析-> トークン -構文解析-> AST -解釈実行-> 結果
 ```
 
+## 環境構築
+for mac: asdf で入れた stack はうまく動かないので注意。 homebrew で stack を入れるのが楽
+
+``` shell
+# stack の設定
+$ brew install stack
+$ emacs .zshenv
+if whence stack > /dev/null; then
+  export PATH="$(stack path --local-bin):$PATH"
+fi
+
+if whence stack > /dev/null; then
+  export PATH="$(stack path --compiler-bin):$PATH"
+fi
+
+# repository download
+$ git clone https://github.com/yorisilo/lambda
+$ cd lambda
+
+# build できるか確認
+$ stack build
+
+# ghc の repl 起動
+# これを多用して色々コードを実行させていく
+# stack ghci
+```
+
+
 # untyped lambda calculus
 ## syntax
 
