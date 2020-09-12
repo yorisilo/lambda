@@ -5,6 +5,7 @@ cf.
 - https://github.com/sdiehl/write-you-a-haskell
 - [katatoshi/tapl](https://github.com/katatoshi/tapl)
 - [つくってあそぼ ラムダ計算インタプリタ](https://speakerdeck.com/kmc_jp/implement-an-interpreter-of-lambda-calculus?slide=17)
+- TaPL
 
 create an AST interpreter like the one below
 ```
@@ -38,6 +39,17 @@ $ stack build
 # stack ghci
 ```
 
+## 青写真
+型なしラムダ計算ってこんなやつ。
+
+- `(λx.x) y`
+- `(λx.x) (λx.x)`
+- `(λx.λy.λz.xy(xz))`
+
+特徴
+- チューリング完全なので、こいつだけで色々書ける。
+- データはエンコーディングして使う。 cf. チャーチ数等
+  - TODO: エンコーディングの具体例など追記する
 
 # untyped lambda calculus
 ## syntax
@@ -129,6 +141,14 @@ exercice.
 λx.e -> λy.e[x<-y]
 ```
 
+### FV: 自由変数の集合
+
+```
+FV(x)      = {x}
+FV (λx.e)  = FV (e) \ {x}
+FV (e1 e2) = FV (e1) ∪ FV (e2)
+```
+
 ### substition
 `e[x<-s]`: `e` に含まれる自由変数 `x` を `s` に置換する
 
@@ -138,7 +158,7 @@ substition の定義
 
 ```
 y[x<-s]      = if x == y then s else y
-(λy.e)[x<-s] = if x == y then λy.e else (λy.e[x<-s])
+(λy.e)[x<-s] = if x == y && y ∉ FV(s) then λy.e else (λy.e[x<-s])
 (t u)[x<-s]  = (t[x<-s]) (u[x<-s])
 ```
 
