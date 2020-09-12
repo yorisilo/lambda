@@ -125,30 +125,6 @@ exercice.
 </details>
 
 
-```
-(λz.(λy.z)) (λy.z) -> ???
-```
-
-<details>
-
-```
-(λz.(λy.z)) (λy.z) -> λz.λz.λz.λz...
-```
-
-</details>
-
-```
-(λx.x x) ((λy.y) z) -> ???
-```
-
-<details>
-
-```
-(λx.x x) ((λy.y) z) -> stack
-```
-
-</details>
-
 ### substition
 `e[x<-s]`: `e` に含まれる自由変数 `x` を `s` に置換する
 

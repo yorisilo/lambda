@@ -34,12 +34,15 @@ fv (App e1 e2) = fv e1 `union` fv e2
 
 -- 1 ステップ評価関数
 eval1 :: Expr -> Maybe Expr
+-- beta
 eval1 (App (Lam x e) v)
   | val v = Just $ subst e x v
+-- App2
 eval1 (App v e)
   | val v = do
     e' <- eval1 e
     return $ App v e'
+-- App1
 eval1 (App e1 e2) = do
   e1' <- eval1 e1
   return $ App e1' e2
@@ -63,3 +66,5 @@ ide = App $ Lam "x" $ Var "x"
 
 -- (λx.x)[x<-y]
 -- subst (Lam "z" (Var "x")) "x" (Var "z")
+
+-- (λz.(λy.z)) (λy.z)
