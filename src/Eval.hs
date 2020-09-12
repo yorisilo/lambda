@@ -10,7 +10,7 @@ subst (Var y) x s
   | x /= y = Var y
 subst (Lam y e) x s
   | x == y = Lam y e
-  | x /= y && (y `notElem` fv s) = Lam y (subst (Lam y e) x s)
+  | x /= y && not (y `elem` fv s) = Lam y (subst e x s)
   | otherwise = let z = deduplication e s y in Lam z $ subst (subst e y (Var z)) x s
 subst (App t1 t2) x s = App (subst t1 x s) (subst t2 x s)
 
@@ -60,3 +60,6 @@ ide = App $ Lam "x" $ Var "x"
 -- App (Lam "x" $ Var "y") (App (Lam "y" $ Var "y") (Var "z"))
 -- ide (ide (Lam "z" $ ide $ Var "z"))
 -- App (Lam "z" (Lam "y" $ Var "z")) (Lam "y" $ Var "z")
+
+-- (λx.x)[x<-y]
+-- subst (Lam "z" (Var "x")) "x" (Var "z")

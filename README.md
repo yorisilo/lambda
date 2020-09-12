@@ -3,6 +3,7 @@ create simple language (and processor)!!
 
 cf.
 - https://github.com/sdiehl/write-you-a-haskell
+- [Introducing Haskell](https://www.cs.princeton.edu/~dpw/cos441-11/notes/slides15-lambda-proofs.pdf)
 - [katatoshi/tapl](https://github.com/katatoshi/tapl)
 - [つくってあそぼ ラムダ計算インタプリタ](https://speakerdeck.com/kmc_jp/implement-an-interpreter-of-lambda-calculus?slide=17)
 - TaPL
@@ -133,6 +134,48 @@ exercice.
 
 </details>
 
+### substition
+`e[x<-s]`: `e` に含まれる自由変数 `x` を `s` に置換する
+
+`s` は閉じた項 (自由変数の無い項) とする
+
+substition の定義
+
+```
+y[x<-s]      = if x == y then s else y
+(λy.e)[x<-s] = if x == y              then λy.e
+               if x /= y && y ∉ FV(s) then (λy.e[x<-s])
+(t u)[x<-s]  = (t[x<-s]) (u[x<-s])
+```
+
+- `(λy.e)[x<-s]` に条件がない場合
+
+```
+# だいたいうまくいく
+(λy.x)[x<-(λz. z w)] = λy.λz. z w
+
+# うまくいかない
+(λx.x)[x<-y] =?= λx.y
+
+# 本当はこうなってほしい
+(λx.x)[x<-y] = λx.x
+```
+
+- `(λy.e)[x<-s]` に `y ∉ FV(s) ` という条件がない場合
+
+```
+# うまくいかない例
+(λz.x)[x<-z] =?= λz.z
+
+# 本当はこうなってほしい
+(λz.x)[x<-z] = λz.y
+```
+
+これで、代入自体は soundness は満たすようになったが、完全ではなくなってしまったので、
+`(λy.e)[x<-s]` の置換をしようとして `x == y` や `x /= y && y ∉ FV(s)` の条件を満たさない場合は、α 変換を適時用いて、`項の意味を変えず`に、変数名を変換することが必要になる。
+
+TODO: どういう項のときにここを使用することになるのか具体的な項を書く
+
 ### α 変換
 `λx.x` と `λy.y` は同じってことを表している規則
 
@@ -147,19 +190,6 @@ exercice.
 FV(x)      = {x}
 FV (λx.e)  = FV (e) \ {x}
 FV (e1 e2) = FV (e1) ∪ FV (e2)
-```
-
-### substition
-`e[x<-s]`: `e` に含まれる自由変数 `x` を `s` に置換する
-
-`s` は閉じた項 (自由変数の無い項) とする
-
-substition の定義
-
-```
-y[x<-s]      = if x == y then s else y
-(λy.e)[x<-s] = if x == y && y ∉ FV(s) then λy.e else (λy.e[x<-s])
-(t u)[x<-s]  = (t[x<-s]) (u[x<-s])
 ```
 
 #### 束縛変数と自由変数
