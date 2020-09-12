@@ -32,12 +32,15 @@ fi
 $ git clone https://github.com/yorisilo/lambda
 $ cd lambda
 
+# ghc とか入れる
+$ stack setup
+
 # build できるか確認
 $ stack build
 
 # ghc の repl 起動
 # これを多用して色々コードを実行させていく
-# stack ghci
+$ stack ghci
 ```
 
 ## 青写真
