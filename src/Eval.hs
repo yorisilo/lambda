@@ -68,3 +68,5 @@ ide = App $ Lam "x" $ Var "x"
 -- subst (Lam "z" (Var "x")) "x" (Var "z")
 
 -- (λz.(λy.z)) (λy.z)
+
+-- App (Lam "y" $ Var "z") (Lam "y" $ Var "z")

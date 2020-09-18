@@ -55,6 +55,8 @@ $ stack build
 # ghc の repl 起動
 # これを多用して色々コードを実行させていく
 $ stack ghci
+...
+*Main Eval Lib Syntax> eval $ App (Lam "y" $ Var "z") (Lam "y" $ Var "z")
 ```
 
 ## 青写真
@@ -97,6 +99,9 @@ small step の 操作的意味論で定義された call-by-value の評価規�
 
 
 ```
+------------------ (init)
+        e
+
 ------------------ (beta)
 λx.e v -> e[x<-v]
 
