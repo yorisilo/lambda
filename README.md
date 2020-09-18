@@ -6,12 +6,14 @@ cf.
 - [Introducing Haskell](https://www.cs.princeton.edu/~dpw/cos441-11/notes/slides15-lambda-proofs.pdf)
 - [katatoshi/tapl](https://github.com/katatoshi/tapl)
 - [つくってあそぼ ラムダ計算インタプリタ](https://speakerdeck.com/kmc_jp/implement-an-interpreter-of-lambda-calculus?slide=17)
+- [lambda\.pdf](https://www.math.nagoya-u.ac.jp/~garrigue/lecture/2018_AW/lambda.pdf)
 - TaPL
 
 create an AST interpreter like the one below
 ```
 ソースコード -字句解析-> トークン -構文解析-> AST -解釈実行-> 結果
 ```
+
 ## 2020-09-12 の流れ
 - 2020-09-12 ゴールの確認: 型なしラムダ計算の evaluator を作る
 - プログラミング言語ってどういうの想像します？
@@ -66,6 +68,11 @@ $ stack ghci
 - チューリング完全なので、こいつだけで色々書ける。
 - データはエンコーディングして使う。 cf. チャーチ数等
   - TODO: エンコーディングの具体例など追記する
+
+cf.
+- [ラムダ計算で代数的データ型を表現する方法 \- @syamino はてなダイアリー](https://syamino.hatenadiary.org/entry/20120524/p1)
+- [代数的データ型をラムダ計算の中で表現する方法](https://www.slideshare.net/syamino/ss-12993070)
+- [ラムダ計算での代数的データのエンコード的な話 \- Object\.create\(null\)](https://susisu.hatenablog.com/entry/2017/02/09/143358)
 
 # untyped lambda calculus
 ## syntax
